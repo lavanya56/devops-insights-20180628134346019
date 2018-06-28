@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Conversation Agent Demo User Interface</title>
+	<!-- load css library -->
+    <link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/style.css">
+  </head>
+<style>
+ .button {
+    background-color: #fff; /* Black */
+    border: none;
+    color: #2b3134;
+    padding: 9px 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 5px 2px;
+    cursor: pointer;
+	border-radius: 8px;
+}
+
+
+ 
+</style>
+  <body style="overflow:hidden">
+    <div class="wrapper">
+    <div class="container" style="top:45%">
+		<!-- left sidebar -->
+	   <div class="left">
+	   <ul class="people">
+				<li class="logo">
+				<center>
+				<img src="miracle.png" alt="" height="50px" width="150px"/> </center>
+				</li>
+			</ul>
+            <div class="top">
+                <input type="text" placeholder="Search"/>
+                <a href="javascript:;" class="search"></a>
+            </div>
+            <ul class="people">
+			  <li class="person" data-chat="person2">
+                  <img src="userImage.png" alt="" style="width:15%;height:15%" />
+                  <span class="name">Customer</span>
+              </li>
+            </ul>
+			
+        </div>
+		
+		<!-- right chat window -->
+        <div class="right" >
+            <div class="top"><center><span><span class="name">Dealer Information Bot</span></span></center></div>
+			<p id="chatlog1" style="overflow-y:scroll;height:485px; width:498px;overflow-x:hidden;padding:14px 15px;">&nbsp;</p>
+			
+			
+			
+            <!--<div class="chat"  style="overflow-y:scroll;height:500px;width:500px;" data-chat="person2">
+				<!--<div id="hell1" class="bubble you"></div>
+				<div id="hell" class="bubble me"></div> -->
+            <!--</div>-->
+			
+            <div class="write">
+
+			<form>
+
+			<input id="m" autocomplete="off" name="SEND" />
+                <a href="javascript:;" class="write-link send" id="send"></a>
+				</br><br>
+
+				</form>
+
+		</div>
+		
+        </div>
+		     <div id='gt'></div>
+
+		<!-- end of right window -->
+    </div>
+</div>
+    <!-- load js library -->
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js'>
+	  </script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="js/index.js"></script>
+	
+		<script>
+/* function updateScrollbar() {
+
+        $('.chat').mCustomScrollbar("update").mCustomScrollbar('scrollTo', '', {
+            scrollInertia: 5,
+            timeout: 0
+        }); -->
+    } */
+	
+      var socket = io();
+      $('form').submit(function(){
+
+			var inpu=[];
+inpu=$('#m').val();
+
+	$('#chatlog1').append('<div class="bubble me">'+$('#m').val()+'</div>').animate({scrollTop:10000},0)
+	
+        socket.emit('chat message', inpu);
+		$('#m').val('');
+        return false;
+
+		});
+	  
+  socket.on('chat',function(msg1){
+$('#m').val('');
+  $('#chatlog1').append('<div class="bubble you">'+msg1+'</div>').animate({scrollTop:10000},0)
+//updateScrollbar();  
+	return false;
+	})
+	
+	
+	
+	
+		
+	function Rfunction1(obj){
+	alert(obj);
+							socket.emit('chat message', obj);	
+
+		document.getElementById('iPhone').style.display = "none";
+		
+		document.getElementById('Surface').style.display = "none";
+		
+		document.getElementById('Apple MacBook').style.display = "none";
+				}
+		
+    </script>
+	<script>
+	var count1;
+	socket.on('cf',function(response){
+	
+	
+	//alert(response)
+	$('#chatlog1').append('<div class="bubble you">'+response.result+'</div>').animate({scrollTop:10000},0);
+	
+	});
+	
+	
+	
+	</script>
+	
+	
+  </body>
+  
+</html>
